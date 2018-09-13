@@ -33,8 +33,7 @@ function addRadios(paramForm) {
 			var radioOptionAttr = paramForm.getAttribute(radioCurrOpt);
 			if (radioOptionAttr !== null) {
 				var radioOptionArray = radioOptionAttr.split(' ');
-				console.log(radioOptionArray);
-				radioInputHTML += '<fieldset><legend>'+radioInputArray[i].replace(/_/g," ")+'</legend>';
+				radioInputHTML += '<fieldset><legend id="'+radioInputArray[i]+'">'+radioInputArray[i].replace(/_/g," ")+'</legend>';
 				for (var j = 0; j < radioOptionArray.length; j++) {
 					
 					radioInputHTML += '<div><input id="' + radioOptionArray[j] + '-' + formName + '" type="radio" name="' + radioInputArray[i] + '" value="'+radioOptionArray[j]+'" />';
@@ -59,7 +58,7 @@ function addCheckboxes(paramForm) {
 			var checkboxOptionAttr = paramForm.getAttribute(checkboxCurrOpt);
 			if (checkboxOptionAttr !== null) {
 				var checkboxOptionArray = checkboxOptionAttr.split(' ');
-				checkboxInputHTML += '<fieldset><legend>'+checkboxInputArray[i].replace(/_/g," ")+'</legend>';
+				checkboxInputHTML += '<fieldset><legend id="'+checkboxInputArray[i]+'">'+checkboxInputArray[i].replace(/_/g," ")+'</legend>';
 				for (var j = 0; j < checkboxOptionArray.length; j++) {
 					checkboxInputHTML += '<div><input id="' + checkboxOptionArray[j] + '-' + formName + '" type="checkbox" name="' + checkboxInputArray[i] + '" value="'+checkboxOptionArray[j]+'" />';
 					checkboxInputHTML += '<label for="' + checkboxOptionArray[j] + '-' + formName + '">'+checkboxOptionArray[j].replace(/_/g," ")+'</label></div>';
