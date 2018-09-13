@@ -25,22 +25,23 @@ function addRadios(paramForm) {
 	var inputsTarget = 'radios-' + formName;
 	var inputs = document.getElementById(inputsTarget);
 	var radioInputAttr = paramForm.getAttribute('data-radio');
-	var radioInputArray = radioInputAttr.split(' ');
-	var radioInputHTML = '';
 	if (radioInputAttr !== null) {
+		var radioInputArray = radioInputAttr.split(' ');
+		var radioInputHTML = '';
 		for (var i = 0; i < radioInputArray.length; i++) {
 			var radioCurrOpt = 'data-radio-choices-' + i;
 			var radioOptionAttr = paramForm.getAttribute(radioCurrOpt);
-			var radioOptionArray = radioOptionAttr.split(' ');
-			console.log(radioOptionArray);
-			
-			radioInputHTML += '<fieldset><legend>'+radioInputArray[i].replace(/_/g," ")+'</legend>';
-			for (var j = 0; j < radioOptionArray.length; j++) {
-				
-				radioInputHTML += '<div><input id="' + radioOptionArray[j] + '-' + formName + '" type="radio" name="' + radioInputArray[i] + '" value="'+radioOptionArray[j]+'" />';
-				radioInputHTML += '<label for="' + radioOptionArray[j] + '-' + formName + '">'+radioOptionArray[j].replace(/_/g," ")+'</label></div>';
+			if (radioOptionAttr !== null) {
+				var radioOptionArray = radioOptionAttr.split(' ');
+				console.log(radioOptionArray);
+				radioInputHTML += '<fieldset><legend>'+radioInputArray[i].replace(/_/g," ")+'</legend>';
+				for (var j = 0; j < radioOptionArray.length; j++) {
+					
+					radioInputHTML += '<div><input id="' + radioOptionArray[j] + '-' + formName + '" type="radio" name="' + radioInputArray[i] + '" value="'+radioOptionArray[j]+'" />';
+					radioInputHTML += '<label for="' + radioOptionArray[j] + '-' + formName + '">'+radioOptionArray[j].replace(/_/g," ")+'</label></div>';
+				}
+				radioInputHTML += '</fieldset>';
 			}
-			radioInputHTML += '</fieldset>';
 		}
 		inputs.innerHTML = radioInputHTML;
 	}
@@ -50,21 +51,21 @@ function addCheckboxes(paramForm) {
 	var inputsTarget = 'checkboxes-' + formName;
 	var inputs = document.getElementById(inputsTarget);
 	var checkboxInputAttr = paramForm.getAttribute('data-checkbox');
-	var checkboxInputArray = checkboxInputAttr.split(' ');
-	var checkboxInputHTML = '';
 	if (checkboxInputAttr !== null) {
+		var checkboxInputArray = checkboxInputAttr.split(' ');
+		var checkboxInputHTML = '';
 		for (var i = 0; i < checkboxInputArray.length; i++) {
 			var checkboxCurrOpt = 'data-checkbox-choices-' + i;
 			var checkboxOptionAttr = paramForm.getAttribute(checkboxCurrOpt);
-			var checkboxOptionArray = checkboxOptionAttr.split(' ');
-			console.log(checkboxOptionArray);
-			
-			checkboxInputHTML += '<fieldset><legend>'+checkboxInputArray[i].replace(/_/g," ")+'</legend>';
-			for (var j = 0; j < checkboxOptionArray.length; j++) {
-				checkboxInputHTML += '<div><input id="' + checkboxOptionArray[j] + '-' + formName + '" type="checkbox" name="' + checkboxInputArray[i] + '" value="'+checkboxOptionArray[j]+'" />';
-				checkboxInputHTML += '<label for="' + checkboxOptionArray[j] + '-' + formName + '">'+checkboxOptionArray[j].replace(/_/g," ")+'</label></div>';
+			if (checkboxOptionAttr !== null) {
+				var checkboxOptionArray = checkboxOptionAttr.split(' ');
+				checkboxInputHTML += '<fieldset><legend>'+checkboxInputArray[i].replace(/_/g," ")+'</legend>';
+				for (var j = 0; j < checkboxOptionArray.length; j++) {
+					checkboxInputHTML += '<div><input id="' + checkboxOptionArray[j] + '-' + formName + '" type="checkbox" name="' + checkboxInputArray[i] + '" value="'+checkboxOptionArray[j]+'" />';
+					checkboxInputHTML += '<label for="' + checkboxOptionArray[j] + '-' + formName + '">'+checkboxOptionArray[j].replace(/_/g," ")+'</label></div>';
+				}
+				checkboxInputHTML += '</fieldset>';
 			}
-			checkboxInputHTML += '</fieldset>';
 		}
 		inputs.innerHTML = checkboxInputHTML;
 	}
@@ -222,6 +223,36 @@ $.validator.addMethod("phoneUS", function(phone_number, element) {
 $.validator.addMethod("anyDate", function(value, element) {
         return value.match(/^(0?[1-9]|1[0-2])[/., -](0?[1-9]|[12][0-9]|3[0-1])[/., -](19|20)?\d{2}$/);
 }, "Please enter a date as MM/DD/YYYY");
+$('.registration #miniform-form,.registration #mainform-form').each(function() {
+	console.log('register');
+	console.log($(this));
+	$(this).validate({
+		debug: true,
+		rules: {
+			name: {
+				required: true
+			},
+			email: {
+				required: true,
+				email: true
+			},
+			phone: {
+				required: true,
+				phoneUS: true
+			},
+			zip: {
+				required: true,
+				digits: true
+			}
+		},
+		submitHandler: function(form) {
+			var action = '/wp-content/plugins/tmc/mailer/register_form.php';
+			form.setAttribute('action', action);
+			$(".submit").attr("disabled", true);
+			form.submit();
+		}
+	});
+});
 $('#miniform-form,#mainform-form').each(function() {
 	$(this).validate({
 		debug: true,
