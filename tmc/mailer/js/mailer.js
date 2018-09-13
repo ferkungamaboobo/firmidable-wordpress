@@ -1,18 +1,21 @@
+// Hello.
+//
+// This is JSHint, a tool that helps to detect errors and potential
+// problems in your JavaScript code.
+//
+// To start, simply enter some JavaScript anywhere on this page. Your
+// report will appear on the right side.
+//
+// Additionally, you can toggle specific options in the Configure
+// menu.
 var miniform = document.getElementById('miniform');
 var mainform = document.getElementById('mainform');
 
 function makeForm(paramForm) {
 	var formName = paramForm.getAttribute('id');
 	var ctaH = '<h2>' + paramForm.getAttribute('data-headline') + '</h2>';
-	var checkbox = paramForm.getAttribute('data-checkbox');
-	var disclaimer = '';
-	if (checkbox == 'true') {
-		var disclaimer = '<input id="disclaimer-' + formName + '" name="disclaimer" type="checkbox" value="disclaimer" /><label for="disclaimer"><a onclick="javascript:window.open(\'/disclaimer.html\',\'\',\'width=300,height=140,location=no,resizeable=no,status=no\'); return;">Disclaimer</a></label>';
-	} else if (checkbox == 'full') {
-		var disclaimer = '<input id="disclaimer-' + formName + '" name="disclaimer" type="checkbox" value="disclaimer" /><label for="disclaimer">Disclaimer: I agree that by contacting you that no client-lawyer relationship has been created. The information that I provide will not be kept confidential. The information on this website is general information and does not constitute legal advice and the reader should not rely on it to solve their individual problem.</label>';
-	}
 	var ctaSubmit = paramForm.getAttribute('data-ctasubmit');
-	var formHTML = '<form method="post" id='+formName+'-form>' + ctaH + '<fieldset id="inputs-' + formName + '"></fieldset><fieldset id="areas-' + formName + '"></fieldset>' + disclaimer + '<input type="hidden" name="page" value="'+document.URL+'" /><input type="text" class="url" name="url" value="" /> <input type="Submit" id="submit-' + formName + '" class="submit" value="' + ctaSubmit + '"></form>';
+	var formHTML = '<form method="post" id='+formName+'-form>' + ctaH + '<fieldset id="inputs-' + formName + '"></fieldset><fieldset id="radios-' + formName + '"></fieldset><fieldset id="checkboxes-' + formName + '"></fieldset><fieldset id="areas-' + formName + '"></fieldset><input type="hidden" name="page" value="'+document.URL+'" /><input type="text" class="url" name="url" value="" /> <input type="Submit" id="submit-' + formName + '" class="submit" value="' + ctaSubmit + '"></form>';
 	paramForm.innerHTML = formHTML;
 }
 function addInputs(paramForm) {
@@ -23,9 +26,58 @@ function addInputs(paramForm) {
 	var textInputArray = textInputAttr.split(' ');
 	var textInputHTML = '';
 	for (var i = 0; i < textInputArray.length; i++) {
-		textInputHTML += '<div class="'+textInputArray[i]+'"><label for="' + textInputArray[i] + '">' + textInputArray[i].replace(/_/g," ") + '</label><input id="' + textInputArray[i] + '-' + formName + '" type="text" name="' + textInputArray[i] + '" /></div>';
+		textInputHTML += '<div class="'+textInputArray[i]+'"><label for="' + textInputArray[i] + '-' + formName + '">' + textInputArray[i].replace(/_/g," ") + '</label><input id="' + textInputArray[i] + '-' + formName + '" type="text" name="' + textInputArray[i] + '" /></div>';
 	}
 	inputs.innerHTML = textInputHTML;
+}
+function addRadios(paramForm) {
+	var formName = paramForm.getAttribute('id');
+	var inputsTarget = 'radios-' + formName;
+	var inputs = document.getElementById(inputsTarget);
+	var radioInputAttr = paramForm.getAttribute('data-radio');
+	var radioInputArray = radioInputAttr.split(' ');
+	var radioInputHTML = '';
+	if (radioInputAttr !== null) {
+		for (var i = 0; i < radioInputArray.length; i++) {
+			var radioCurrOpt = 'data-radio-choices-' + i;
+			var radioOptionAttr = paramForm.getAttribute(radioCurrOpt);
+			var radioOptionArray = radioOptionAttr.split(' ');
+			console.log(radioOptionArray);
+			
+			radioInputHTML += '<fieldset><legend>'+radioInputArray[i].replace(/_/g," ")+'</legend>';
+			for (var j = 0; j < radioOptionArray.length; j++) {
+				
+				radioInputHTML += '<div><input id="' + radioOptionArray[j] + '-' + formName + '" type="radio" name="' + radioInputArray[i] + '" value="'+radioOptionArray[j]+'" />';
+				radioInputHTML += '<label for="' + radioOptionArray[j] + '-' + formName + '">'+radioOptionArray[j].replace(/_/g," ")+'</label></div>';
+			}
+			radioInputHTML += '</fieldset>';
+		}
+		inputs.innerHTML = radioInputHTML;
+	}
+}
+function addCheckboxes(paramForm) {
+	var formName = paramForm.getAttribute('id');
+	var inputsTarget = 'checkboxes-' + formName;
+	var inputs = document.getElementById(inputsTarget);
+	var checkboxInputAttr = paramForm.getAttribute('data-checkbox');
+	var checkboxInputArray = checkboxInputAttr.split(' ');
+	var checkboxInputHTML = '';
+	if (checkboxInputAttr !== null) {
+		for (var i = 0; i < checkboxInputArray.length; i++) {
+			var checkboxCurrOpt = 'data-checkbox-choices-' + i;
+			var checkboxOptionAttr = paramForm.getAttribute(checkboxCurrOpt);
+			var checkboxOptionArray = checkboxOptionAttr.split(' ');
+			console.log(checkboxOptionArray);
+			
+			checkboxInputHTML += '<fieldset><legend>'+checkboxInputArray[i].replace(/_/g," ")+'</legend>';
+			for (var j = 0; j < checkboxOptionArray.length; j++) {
+				checkboxInputHTML += '<div><input id="' + checkboxOptionArray[j] + '-' + formName + '" type="checkbox" name="' + checkboxInputArray[i] + '" value="'+checkboxOptionArray[j]+'" />';
+				checkboxInputHTML += '<label for="' + checkboxOptionArray[j] + '-' + formName + '">'+checkboxOptionArray[j].replace(/_/g," ")+'</label></div>';
+			}
+			checkboxInputHTML += '</fieldset>';
+		}
+		inputs.innerHTML = checkboxInputHTML;
+	}
 }
 function addAreas(paramForm) {
 	var formName = paramForm.getAttribute('id');
@@ -37,7 +89,7 @@ function addAreas(paramForm) {
 		var textAreaArray = textAreaAttr.split(' ');
 		var areas = document.getElementById(areasTarget);
 		for (var i = 0; i < textAreaArray.length; i++) {
-			textAreaHTML = '<div class="'+textAreaArray[i]+'"><label for="' + textAreaArray[i] + '">' + textAreaArray[i].replace(/_/g," ") + '</label><textarea id="' + textAreaArray[i] + '-' + formName + '" name="' + textAreaArray[i] + '"></textarea></div>';
+			textAreaHTML = '<div class="'+textAreaArray[i]+'"><label for="' + textAreaArray[i] + '-' + formName + '">' + textAreaArray[i].replace(/_/g," ") + '</label><textarea id="' + textAreaArray[i] + '-' + formName + '" name="' + textAreaArray[i] + '"></textarea></div>';
 		}
 		areas.innerHTML = textAreaHTML;
 	}
@@ -68,7 +120,7 @@ function addTrack(paramForm) {
 		}
 	}
 	if(gc != "" && gc != undefined ){
-		console.log('std')
+		console.log('std');
 		var z = gc.split('.'); 
 		var y = gc.split('utm');
 		if(z.length >= 4){
@@ -97,7 +149,7 @@ function addTrack(paramForm) {
 		formElement.insertAdjacentHTML('beforeend',totalHidden);
 	}
 	else if(gc == "" || gc === undefined ) {
-		console.log('ajax')
+		console.log('ajax');
 		//do something to get the utmz on first pageload
 		$.ajax({
 			url: ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js',
@@ -160,12 +212,16 @@ function addTrack(paramForm) {
 if (document.body.contains(miniform)) {
 	makeForm(miniform);
 	addInputs(miniform);
+	addRadios(miniform);
+	addCheckboxes(miniform);
 	addAreas(miniform);
 	addTrack(miniform);
 }
 if (document.body.contains(mainform)) {
 	makeForm(mainform);
 	addInputs(mainform);
+	addRadios(mainform);
+	addCheckboxes(mainform);
 	addAreas(mainform);
 	addTrack(mainform);
 }
