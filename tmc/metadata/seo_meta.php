@@ -24,6 +24,7 @@ if (isset($seo_full_title) && $seo_full_title!='') {
 function firm_keyword_title() {
 	global $post;
 	if (is_home()) {  $firm_post_id = get_option('page_for_posts'); }
+	elseif (is_404()) { $firm_post_id = ''; }
 	else { $firm_post_id = $post->ID; }
 	$seo_keyword = get_post_meta( $firm_post_id, 'focus_kw', true);
 	if (isset($seo_keyword) && $seo_keyword!='') {
@@ -35,11 +36,14 @@ function firm_keyword_title() {
 			$title['site'] = get_bloginfo('name');
 			$title['tagline'] = get_bloginfo('description');
 		}
-		elseif ( is_author() ) {
+		elseif ( is_author() ){
 			$title['title'] = 'Articles By '.get_the_author_meta('display_name');
 		}
 		elseif ( is_archive() ){ 
 			$title['title'] = get_the_archive_title();
+		}
+		elseif ( is_404() ){
+			$title['title'] = 'Page Not Found';
 		}
 		else {
 			$title['title'] =  get_the_title($firm_post_id);
@@ -53,6 +57,7 @@ add_filter( 'document_title_parts', 'firm_keyword_title', 1, 1 );
 function firm_meta_desc() {
 	global $post;
 	if (is_home()) {  $firm_post_id = get_option('page_for_posts'); }
+	elseif (is_404()) { $firm_post_id = ''; }
 	else { $firm_post_id = $post->ID; }
 	$meta_description = get_post_meta( $firm_post_id, 'meta_desc', true);
 	if (is_single()) { $firm_excerpt = get_the_excerpt($firm_post_id); }
