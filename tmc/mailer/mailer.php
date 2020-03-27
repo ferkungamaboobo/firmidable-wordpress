@@ -9,7 +9,7 @@ function firm_mailer_funct() {
 	$ua_domain = $_SERVER['SERVER_NAME'];
 	$tmc_ua_code = esc_attr( get_option( 'mailer_ua_code' ) );
 	$mailer_js_url = plugins_url( 'js/mailer.js', __FILE__ );
-	wp_enqueue_script( 'jquery_validate', 'http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.0/jquery.validate.min.js', array('jquery'), null, false);
+	wp_enqueue_script( 'jquery_validate', 'https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.0/jquery.validate.min.js', array('jquery'), null, false);
 	wp_enqueue_script( 'firm_mailer', $mailer_js_url, array('jquery_validate'), null, true);
 	firm_ga($tmc_ua_code, $ua_domain);
 }
