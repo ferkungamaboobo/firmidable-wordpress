@@ -75,4 +75,4 @@ The full changelog without version numbers can be seen at the [GitHub History](h
 ## Upgrade Notice
 
 ### .05
-This update fixes issues with sites using a traditional blog setuo. If the site uses a blog,this is a necessary upgrade.
+This update fixes issues with sites using a traditional blog setup. If the site uses a blog,this is a necessary upgrade.
