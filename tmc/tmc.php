@@ -4,8 +4,8 @@ Plugin Name: Firmidable
 Plugin URI: https://firmidable.com
 Description: Alpha build of Firmidable WordPress launcher. Includes common functions and installs.
 Version: 0.0.06
-Author: dthomas
-Author URI: https://ferkungamaboobo.com
+Author: rthomas
+Author URI: https://magniventris.com
 License: proprietary
 License URI: proprietary
 Text Domain: none
@@ -322,7 +322,7 @@ function firmidable_settings_page() { ?>
 		<form action="options.php" method="POST">
 			<?php settings_fields('firmidable_options'); ?>
 			<?php do_settings_sections('firmidable'); ?>
-			<?php submit_button(); ?>
+			<?php submit_button();Â ?>
 		</form>
 	</div>
 <?php }
@@ -334,7 +334,7 @@ function mailer_settings_page() { ?>
 			<?php settings_fields('mailer_options'); ?>
 			<?php do_settings_sections('firmidable_mailer'); ?>
 			<?php do_settings_sections('firmidable_mailer_smpt'); ?>
-			<?php submit_button(); ?>
+			<?php submit_button();Â ?>
 		</form>
 	</div>
 <?php }
@@ -345,7 +345,7 @@ function metadata_settings_page() { ?>
 		<form action="options.php" method="POST">
 			<?php settings_fields('metadata_options'); ?>
 			<?php do_settings_sections('firmidable_metadata'); ?>
-			<?php submit_button(); ?>
+			<?php submit_button();Â ?>
 		</form>
 	</div>
 <?php }
@@ -356,7 +356,7 @@ function social_plugin_settings_page() { ?>
 		<form action="options.php" method="POST">
 			<?php settings_fields('social_plugin_options'); ?>
 			<?php do_settings_sections('firmidable_social_plugin'); ?>
-			<?php submit_button(); ?>
+			<?php submit_button();Â ?>
 		</form>
 	</div>
 <?php }
@@ -367,7 +367,7 @@ function lead_tracking_settings_page() { ?>
 		<form action="options.php" method="POST">
 			<?php settings_fields('lead_tracking_options'); ?>
 			<?php do_settings_sections('firmidable_lead_tracking'); ?>
-			<?php submit_button(); ?>
+			<?php submit_button();Â ?>
 		</form>
 	</div>
 <?php }
@@ -378,7 +378,7 @@ function analytics_settings_page() { ?>
 		<form action="options.php" method="POST">
 			<?php settings_fields('analytics_options'); ?>
 			<?php do_settings_sections('firmidable_analytics'); ?>
-			<?php submit_button(); ?>
+			<?php submit_button();Â ?>
 		</form>
 	</div>
 <?php }
@@ -389,7 +389,7 @@ function ab_tester_settings_page() { ?>
 		<form action="options.php" method="POST">
 			<?php settings_fields('ab_tester_options'); ?>
 			<?php do_settings_sections('firmidable_ab_tester'); ?>
-			<?php submit_button(); ?>
+			<?php submit_button();Â ?>
 		</form>
 	</div>
 <?php }
